@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Preservative-Free Guarantee
+                </div>
+                <h1>Fast Food, <span>But Done Right</span></h1>
+                <p class="hero-description">Clean, preservative-free instant foods inspired by traditional nutrition. Designed for modern lifestyles. Make healthy eating effortless.</p>
+                <div class="hero-actions">
+                    <a href="{{ url_for('products') }}" class="btn btn-primary">
+                        Explore Products
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#story" class="btn btn-outline">Our Story</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-product">
+                    <span class="emoji">🌾</span>
+                    <span class="product-name">Multipurpose Flour</span>
+                    <span class="product-tag">One flour. Endless possibilities.</span>
+                </div>
+                <span class="floating-leaf">🍃</span>
+                <span class="floating-leaf">🌿</span>
+                <span class="floating-leaf">🍂</span>
+                <span class="floating-leaf">🌱</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose Oottam?</h2>
+            <p>We believe healthy eating shouldn't be complicated. That's why we've made it simple, clean, and delicious.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card slide-up">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12l2 2 4-4"></path></svg>
+                </div>
+                <h3>100% Natural</h3>
+                <p>No preservatives. No artificial additives. Just honest, pure ingredients from trusted sources.</p>
+            </div>
+            <div class="feature-card slide-up">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <h3>Multi-Purpose Use</h3>
+                <p>One flour, endless possibilities. Roti, dosa, porridge, snacks — one pack does it all.</p>
+            </div>
+            <div class="feature-card slide-up">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h3>Ready in Minutes</h3>
+                <p>Quick to prepare, quick to cook. Perfect for busy lifestyles without compromising on nutrition.</p>
+            </div>
+            <div class="feature-card slide-up">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3>Traditional Wisdom</h3>
+                <p>Inspired by Indian nutrition heritage. Rooted in tradition, designed for today.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="products-preview" id="products">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Products</h2>
+            <p>Clean, healthy alternatives to everyday instant foods. Crafted with care for you and your family.</p>
+        </div>
+        <div class="products-grid">
+            {% for product in featured %}
+            <div class="product-card">
+                <div class="product-image-container">
+                    <span class="emoji">🌾</span>
+                    {% if product.original_price %}
+                    <span class="product-badge">Save ₹{{ (product.original_price - product.price)|int }}</span>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.short_description }}</p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            <span class="price-current">₹{{ product.price }}</span>
+                            {% if product.original_price %}
+                            <span class="price-original">₹{{ product.original_price }}</span>
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('product', slug=product.slug) }}" class="btn btn-secondary btn-sm">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align: center;">
+            <a href="{{ url_for('products') }}" class="btn btn-outline">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<section class="story" id="story">
+    <div class="container">
+        <div class="story-grid">
+            <div class="story-content">
+                <h2>Our Story</h2>
+                <p>We saw a problem: in today's fast-paced world, people depend on instant food because life is fast. But most instant food is unhealthy, overly processed, and disconnected from real nutrition.</p>
+                <p>Oottam bridges that gap. We create clean, preservative-free instant foods inspired by traditional nutrition — designed for modern lifestyles.</p>
+                <p>Our multipurpose flour isn't just another product. It's our answer to the question: why can't healthy eating be effortless?</p>
+            </div>
+            <div class="story-visual">
+                <div class="story-card">
+                    <div class="number">100%</div>
+                    <p>Natural Ingredients</p>
+                </div>
+                <div class="story-card">
+                    <div class="number">0</div>
+                    <p>Preservatives</p>
+                </div>
+                <div class="story-card">
+                    <div class="number">5</div>
+                    <p>Minute Prep</p>
+                </div>
+                <div class="story-card">
+                    <div class="number">∞</div>
+                    <p>Possibilities</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="values">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Values</h2>
+            <p>The principles that guide everything we do.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3>Transparency</h3>
+                <p>We show you exactly what's in our products. No hidden ingredients.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 16v-4M12 8h.01"></path></svg>
+                </div>
+                <h3>Quality</h3>
+                <p>We never compromise on the quality of our ingredients. Only the best.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+                </div>
+                <h3>Tradition</h3>
+                <p>Inspired by traditional Indian nutrition wisdom. Time-tested and trusted.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <h3>Innovation</h3>
+                <p>Modern solutions rooted in tradition. Making the old new again.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to taste the difference?</h2>
+            <p>Join thousands of families who have made the switch to clean, healthy eating.</p>
+            <a href="{{ url_for('products') }}" class="btn btn-primary">Shop Now</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('index') }}">Home</a>
+            <span>/</span>
+            <a href="{{ url_for('products') }}">Products</a>
+            <span>/</span>
+            <span>{{ product.name }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="product-detail">
+    <div class="container">
+        <div class="product-detail-grid">
+            <div class="product-gallery">
+                <span class="emoji">🌾</span>
+            </div>
+            <div class="product-detail-info">
+                <h1>{{ product.name }}</h1>
+                <div class="product-detail-price">
+                    <span class="current">₹{{ product.price }}</span>
+                    {% if product.original_price %}
+                    <span class="original">₹{{ product.original_price }}</span>
+                    <span class="discount">Save {{ (((product.original_price - product.price) / product.original_price) * 100)|round|int }}%</span>
+                    {% endif %}
+                </div>
+                <p class="product-detail-description">{{ product.description }}</p>
+                
+                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="GET">
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-btn decrease">−</button>
+                            <span class="quantity-value">1</span>
+                            <button type="button" class="quantity-btn increase">+</button>
+                        </div>
+                        <input type="hidden" name="quantity" value="1">
+                    </div>
+                    <div class="add-to-cart-section">
+                        <button type="submit" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                            Add to Cart
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="product-tabs">
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="use-cases">What You Can Make</button>
+                <button class="tab-btn" data-tab="ingredients">Ingredients</button>
+                <button class="tab-btn" data-tab="how-to-use">How to Use</button>
+            </div>
+            
+            <div id="use-cases" class="tab-content active">
+                <h3>Versatile Options</h3>
+                <p>Our multipurpose flour is designed to make your cooking flexible and easy. From traditional favorites to quick meals.</p>
+                <div class="use-cases-grid">
+                    {% for use_case in product.use_cases.split('|') %}
+                    <span class="use-case-tag">{{ use_case }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div id="ingredients" class="tab-content">
+                <h3>What's Inside</h3>
+                <p>We believe in complete transparency. Here's exactly what goes into our product:</p>
+                <ul class="ingredients-list">
+                    {% for line in product.ingredients.split('\n') %}
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        {{ line }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div id="how-to-use" class="tab-content">
+                <h3>Simple Instructions</h3>
+                <p>Getting started is easy. Follow these simple steps:</p>
+                <ol class="instructions-list">
+                    {% for step in product.how_to_use.split('\n') %}
+                    {% if step.strip() %}
+                    <li>{{ step.replace('1. ', '').replace('2. ', '').replace('3. ', '').replace('4. ', '') }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        
+        {% if related %}
+        <div class="related-products">
+            <h2>You Might Also Like</h2>
+            <div class="products-grid">
+                {% for item in related %}
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <span class="emoji">🌾</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.short_description }}</p>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-current">₹{{ item.price }}</span>
+                            </div>
+                            <a href="{{ url_for('product', slug=item.slug) }}" class="btn btn-secondary btn-sm">View</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.querySelectorAll('.quantity-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const controls = this.closest('.quantity-controls');
+        const valueSpan = controls.querySelector('.quantity-value');
+        const hiddenInput = controls.parentElement.querySelector('input[name="quantity"]');
+        let value = parseInt(valueSpan.textContent);
+        
+        if (this.classList.contains('decrease') && value > 1) {
+            value--;
+        } else if (this.classList.contains('increase')) {
+            value++;
+        }
+        
+        valueSpan.textContent = value;
+        hiddenInput.value = value;
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('index') }}">Home</a>
+            <span>/</span>
+            <a href="{{ url_for('cart') }}">Cart</a>
+            <span>/</span>
+            <span>Checkout</span>
+        </div>
+        <h1>Checkout</h1>
+    </div>
+</div>
+
+<section class="checkout-page">
+    <div class="container">
+        <div class="checkout-layout">
+            <div class="checkout-form">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="form-section">
+                        <h3>Contact Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                {{ form.first_name.label }}
+                                {{ form.first_name() }}
+                                {% if form.first_name.errors %}
+                                <span class="error-message">{{ form.first_name.errors[0] }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.last_name.label }}
+                                {{ form.last_name() }}
+                                {% if form.last_name.errors %}
+                                <span class="error-message">{{ form.last_name.errors[0] }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                {{ form.email.label }}
+                                {{ form.email() }}
+                                {% if form.email.errors %}
+                                <span class="error-message">{{ form.email.errors[0] }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.phone.label }}
+                                {{ form.phone() }}
+                                {% if form.phone.errors %}
+                                <span class="error-message">{{ form.phone.errors[0] }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Shipping Address</h3>
+                        <div class="form-group">
+                            {{ form.address.label }}
+                            {{ form.address() }}
+                            {% if form.address.errors %}
+                            <span class="error-message">{{ form.address.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                {{ form.city.label }}
+                                {{ form.city() }}
+                                {% if form.city.errors %}
+                                <span class="error-message">{{ form.city.errors[0] }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.state.label }}
+                                {{ form.state() }}
+                                {% if form.state.errors %}
+                                <span class="error-message">{{ form.state.errors[0] }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.pincode.label }}
+                            {{ form.pincode() }}
+                            {% if form.pincode.errors %}
+                            <span class="error-message">{{ form.pincode.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Payment</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">This is a demo. No real payment will be processed.</p>
+                        <div class="form-group">
+                            <div style="padding: 20px; background: var(--bg); border-radius: var(--radius-md); text-align: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary); margin-bottom: 12px;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                <p style="font-weight: 500;">Cash on Delivery Available</p>
+                                <p style="font-size: 13px; color: var(--text-secondary);">Pay when you receive your order</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{ form.submit(class="btn btn-primary") }}
+                </form>
+            </div>
+            
+            <div class="checkout-summary">
+                <h3>Order Summary</h3>
+                <div class="checkout-items">
+                    {% for item in products %}
+                    <div class="checkout-item">
+                        <div class="checkout-item-image">
+                            <span class="emoji">🌾</span>
+                        </div>
+                        <div class="checkout-item-info">
+                            <h4>{{ item.product.name }}</h4>
+                            <p>Qty: {{ item.quantity }}</p>
+                        </div>
+                        <span class="checkout-item-price">₹{{ item.item_total }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>₹{{ total }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                </div>
+                <div class="summary-row">
+                    <span>Taxes</span>
+                    <span>₹0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>₹{{ total }}</span>
+                </div>
+                
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Secure Checkout
+                    </div>
+                    <div class="trust-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Delivery Across India
+                    </div>
+                    <div class="trust-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        30-Day Guarantee
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

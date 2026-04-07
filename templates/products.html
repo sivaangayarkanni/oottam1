@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('index') }}">Home</a>
+            <span>/</span>
+            <span>Products</span>
+        </div>
+        <h1>Our Products</h1>
+        <p>Clean, healthy alternatives to everyday instant foods.</p>
+    </div>
+</div>
+
+<section class="products-page">
+    <div class="container">
+        <div class="products-layout">
+            <aside class="filters-sidebar">
+                <div class="filter-section">
+                    <h3>Type</h3>
+                    <div class="filter-options">
+                        <a href="{{ url_for('products', flavor=current_flavor) }}" class="filter-option{% if current_type == 'all' %} active{% endif %}">
+                            All Products
+                        </a>
+                        <a href="{{ url_for('products', type='multipurpose', flavor=current_flavor) }}" class="filter-option{% if current_type == 'multipurpose' %} active{% endif %}">
+                            Multipurpose Flour
+                        </a>
+                        <a href="{{ url_for('products', type='instant', flavor=current_flavor) }}" class="filter-option{% if current_type == 'instant' %} active{% endif %}">
+                            Instant Mix
+                        </a>
+                        <a href="{{ url_for('products', type='combo', flavor=current_flavor) }}" class="filter-option{% if current_type == 'combo' %} active{% endif %}">
+                            Combos
+                        </a>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h3>Flavor</h3>
+                    <div class="filter-options">
+                        <a href="{{ url_for('products', type=current_type) }}" class="filter-option{% if current_flavor == 'all' %} active{% endif %}">
+                            All Flavors
+                        </a>
+                        <a href="{{ url_for('products', type=current_type, flavor='original') }}" class="filter-option{% if current_flavor == 'original' %} active{% endif %}">
+                            Original
+                        </a>
+                        <a href="{{ url_for('products', type=current_type, flavor='multigrain') }}" class="filter-option{% if current_flavor == 'multigrain' %} active{% endif %}">
+                            Multigrain
+                        </a>
+                        <a href="{{ url_for('products', type=current_type, flavor='ragi') }}" class="filter-option{% if current_flavor == 'ragi' %} active{% endif %}">
+                            Ragi
+                        </a>
+                        <a href="{{ url_for('products', type=current_type, flavor='rice') }}" class="filter-option{% if current_flavor == 'rice' %} active{% endif %}">
+                            Rice
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            
+            <div class="products-main">
+                {% if products %}
+                <div class="products-grid">
+                    {% for product in products %}
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <span class="emoji">🌾</span>
+                            {% if product.original_price %}
+                            <span class="product-badge">Save ₹{{ (product.original_price - product.price)|int }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.short_description }}</p>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="price-current">₹{{ product.price }}</span>
+                                    {% if product.original_price %}
+                                    <span class="price-original">₹{{ product.original_price }}</span>
+                                    {% endif %}
+                                </div>
+                                <a href="{{ url_for('product', slug=product.slug) }}" class="btn btn-secondary btn-sm">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="cart-empty">
+                    <h2>No products found</h2>
+                    <p>Try adjusting your filters to see more products.</p>
+                    <a href="{{ url_for('products') }}" class="btn btn-primary">View All Products</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

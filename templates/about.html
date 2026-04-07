@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="about-page">
+    <div class="about-hero">
+        <div class="container">
+            <div class="about-hero-grid">
+                <div class="about-hero-text">
+                    <h1>About Oottam</h1>
+                    <p>We're on a mission to make healthy eating effortless. Born from a simple belief: good food shouldn't be complicated.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="about-story">
+        <div class="container">
+            <div class="about-story-content">
+                <h2>Our Story</h2>
+                <p>We saw a problem that affects millions of people every day: in today's fast-paced world, people depend on instant food because life is fast. But most instant food available today is unhealthy, overly processed, and disconnected from real nutrition.</p>
+                <p>Oottam was born from a simple question: why can't healthy eating be effortless? Why do we have to choose between convenience and nutrition?</p>
+                <p>Our answer is simple — bridge the gap. We create clean, preservative-free instant foods inspired by traditional Indian nutrition — designed specifically for modern lifestyles.</p>
+                <p>Every product we make starts with real ingredients, minimal processing, and maximum care. We honor the wisdom of our ancestors while embracing the needs of today.</p>
+                <p>This is not just about selling flour. It's about changing how India eats, one packet at a time.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about-values">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Stand For</h2>
+                <p>The principles that guide every decision we make.</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3>Transparency</h3>
+                    <p>We show you exactly what's in our products. Every ingredient, every source, every process. No hidden anything.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 16v-4M12 8h.01"></path></svg>
+                    </div>
+                    <h3>Quality</h3>
+                    <p>We never compromise on ingredient quality. Only the best grains, from trusted sources, processed with care.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+                    </div>
+                    <h3>Tradition</h3>
+                    <p>Our recipes are inspired by generations of Indian nutrition wisdom. Time-tested, trusted, and truly nourishing.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>Modern problems need modern solutions. We reinvent traditional foods for today's fast-paced lifestyles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Join us on this journey</h2>
+                <p>Every meal is an opportunity to eat better. Let us help you make it happen.</p>
+                <a href="{{ url_for('products') }}" class="btn btn-primary">Explore Our Products</a>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}
